@@ -1,6 +1,6 @@
 package com.company;
 
-import javax.swing.*;
+        import javax.swing.*;
 
 class MainWindow extends JFrame
 {
@@ -18,7 +18,7 @@ class MainWindow extends JFrame
         JMenuBar menu = new JMenuBar();
 
         menu.add(new File(tabs));
-        menu.add(new Settings());
+        menu.add(new Settings(tabs));
         setJMenuBar(menu);
 
         add(tabs);

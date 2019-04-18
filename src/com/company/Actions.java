@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -73,6 +74,23 @@ class Actions
                 System.out.println(ex.getMessage());
             }
         }
+    }
+    void selectSize(){
+        Object[] possibilities = {10,15, 20,30,40,50,100};
+        int size = (int)JOptionPane.showInputDialog(
+                tabs,
+                "Select size",
+                "Select size",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                possibilities,
+                10);
+        Font font = new Font("",Font.PLAIN,size);
+        for(int i = 0 ; i < tabs.getComponentCount();i++){
+            Scroll scroll = (Scroll) tabs.getComponent(i);
+            scroll.setFonts(font);
+        }
+        Scroll.font = font;
     }
 
 }

@@ -6,13 +6,11 @@ import java.awt.event.ActionListener;
 
 class Settings extends JMenu
 {
-    Settings(){
+    Settings(JTabbedPane tabs){
         super("Settings");
-
+        Actions actions = new Actions(tabs);
         JMenuItem size = new JMenuItem("size");
-        size.addActionListener(actionEvent -> {
-
-        });
+        size.addActionListener(actionEvent -> actions.selectSize());
         this.add(size);
     }
 }
