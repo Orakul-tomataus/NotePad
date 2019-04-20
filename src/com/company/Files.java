@@ -2,9 +2,9 @@ package com.company;
 
 import javax.swing.*;
 
-class File extends JMenu
+class Files extends JMenu
 {
-    File(JTabbedPane tabs){
+    Files(JTabbedPane tabs){
         super("File");
         Actions actions = new Actions(tabs);
         

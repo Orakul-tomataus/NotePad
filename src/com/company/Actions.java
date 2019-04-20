@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Properties;
 
 class Actions
 {
@@ -19,39 +20,37 @@ class Actions
 
     void new_file()
     {
-        if (tabs.countComponents() != 0){
-            Scroll select = (Scroll)tabs.getSelectedComponent();
-            select.setEditable(false);
+        if (tabs.countComponents() == 0){
             JTextArea text = new JTextArea();
             Scroll scroll = new Scroll(text,NAME,tabs);
             tabs.addTab(NAME,scroll);
-            select.setEditable(true);
-        } else {
-            JTextArea text = new JTextArea();
-            Scroll scroll = new Scroll(text,NAME,tabs);
-            tabs.addTab(NAME,scroll);
+            return;
         }
-
-
+        Scroll select = (Scroll)tabs.getSelectedComponent();
+        select.setEditable(false);
+        JTextArea text = new JTextArea();
+        Scroll scroll = new Scroll(text,NAME,tabs);
+        tabs.addTab(NAME,scroll);
+        select.setEditable(true);
     }
     void save_file()
     {
-        if (tabs.countComponents() != 0)
-        {
-            Scroll selectedComponent = (Scroll)tabs.getSelectedComponent();
-            selectedComponent.setEditable(false);
-            String output = selectedComponent.getText();
-            f.showSaveDialog(null);
-            File file = f.getSelectedFile();
-            if (file != null){
-                try(FileWriter writer = new FileWriter(file,false)){
-                    writer.write(output);
-                }catch (IOException eq) {
-                    eq.printStackTrace();
-                }
+        if (tabs.countComponents() == 0) return;
+
+        Scroll selectedComponent = (Scroll)tabs.getSelectedComponent();
+        selectedComponent.setEditable(false);
+        String output = selectedComponent.getText();
+        f.showSaveDialog(null);
+        File file = f.getSelectedFile();
+        if (file != null){
+            try(FileWriter writer = new FileWriter(file,false)){
+                writer.write(output);
+            }catch (IOException eq) {
+                eq.printStackTrace();
             }
-            selectedComponent.setEditable(true);
         }
+        selectedComponent.setEditable(true);
+
     }
     void open_file()
     {
@@ -76,7 +75,8 @@ class Actions
         }
     }
     void selectSize(){
-        Object[] possibilities = {10,15, 20,30,40,50,100};
+        Object[] possibilities = {10,15,20,30,40,50,100};
+
         int size = (int)JOptionPane.showInputDialog(
                 tabs,
                 "Select size",
@@ -84,7 +84,14 @@ class Actions
                 JOptionPane.PLAIN_MESSAGE,
                 null,
                 possibilities,
-                10);
+                Config.FontSize);
+
+        Config.FontSize = size;
+        Config.writeConfig();
+
+        setFont(size);
+    }
+    private void setFont(int size){
         Font font = new Font("",Font.PLAIN,size);
         for(int i = 0 ; i < tabs.getComponentCount();i++){
             Scroll scroll = (Scroll) tabs.getComponent(i);
@@ -92,5 +99,4 @@ class Actions
         }
         Scroll.font = font;
     }
-
 }
