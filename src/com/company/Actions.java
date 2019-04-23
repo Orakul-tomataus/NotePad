@@ -22,35 +22,27 @@ class Actions
 
     void new_file()
     {
-        if (tabs.countComponents() == 0){
-            JTextArea text = new JTextArea();
-            Scroll scroll = new Scroll(text,NAME);
-            tabs.addTab(NAME,scroll);
-            return;
-        }
-        Scroll select = (Scroll)tabs.getSelectedComponent();
-        select.setEditable(false);
         JTextArea text = new JTextArea();
         Scroll scroll = new Scroll(text,NAME);
         tabs.addTab(NAME,scroll);
-        select.setEditable(true);
     }
     void save_file()
     {
-        if (tabs.countComponents() == 0) return;
-
         Scroll selectedComponent = (Scroll)tabs.getSelectedComponent();
+        if (selectedComponent == null) return;
+
         selectedComponent.setEditable(false);
         String output = selectedComponent.getText();
         f.showSaveDialog(null);
         File file = f.getSelectedFile();
-        if (file != null){
-            try(FileWriter writer = new FileWriter(file,false)){
-                writer.write(output);
-            }catch (IOException eq) {
-                eq.printStackTrace();
-            }
+        if (file == null) return;
+
+        try(FileWriter writer = new FileWriter(file,false)){
+            writer.write(output);
+        }catch (IOException eq) {
+            eq.printStackTrace();
         }
+
         selectedComponent.setEditable(true);
 
     }
