@@ -6,15 +6,17 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Properties;
 
 class Actions
 {
     private final String NAME = "New file";
+    private final Object[] possibilities = {10,15,20,30,40,50,100};
+    private JFileChooser f;
+
     private JTabbedPane tabs;
-    private JFileChooser f = new JFileChooser();
 
     Actions(JTabbedPane tabs){
+        f = new JFileChooser();
         this.tabs = tabs;
     }
 
@@ -22,14 +24,14 @@ class Actions
     {
         if (tabs.countComponents() == 0){
             JTextArea text = new JTextArea();
-            Scroll scroll = new Scroll(text,NAME,tabs);
+            Scroll scroll = new Scroll(text,NAME);
             tabs.addTab(NAME,scroll);
             return;
         }
         Scroll select = (Scroll)tabs.getSelectedComponent();
         select.setEditable(false);
         JTextArea text = new JTextArea();
-        Scroll scroll = new Scroll(text,NAME,tabs);
+        Scroll scroll = new Scroll(text,NAME);
         tabs.addTab(NAME,scroll);
         select.setEditable(true);
     }
@@ -65,7 +67,7 @@ class Actions
                 while (reader.read(buf) > 0)
                     input.append(String.copyValueOf(buf));
                 text = new JTextArea(input.toString());
-                Scroll scroll = new Scroll(text,file.getName(),tabs);
+                Scroll scroll = new Scroll(text,file.getName());
                 tabs.addTab(file.getName(),scroll);
             }
             catch(IOException ex)
@@ -74,9 +76,8 @@ class Actions
             }
         }
     }
-    void selectSize(){
-        Object[] possibilities = {10,15,20,30,40,50,100};
 
+    void selectSize(){
         int size = (int)JOptionPane.showInputDialog(
                 tabs,
                 "Select size",
@@ -84,11 +85,8 @@ class Actions
                 JOptionPane.PLAIN_MESSAGE,
                 null,
                 possibilities,
-                Config.FontSize);
-
-        Config.FontSize = size;
-        Config.writeConfig();
-
+                MainWindow.config.getSize());
+        MainWindow.config.setSize(size);
         setFont(size);
     }
     private void setFont(int size){

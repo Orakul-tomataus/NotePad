@@ -1,30 +1,27 @@
 package com.company;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 class MyListener {
+    private String[] keyNew = MainWindow.config.getKeysNewFile();
+    private String[] keyOpen= MainWindow.config.getKeysOpenFile();
+    private String[] keySave= MainWindow.config.getKeysSaveFile();
     private KeyListener keyadapter;
-    private Actions actions;
 
-    MyListener(JTabbedPane tabs){
-
-        actions = new Actions(tabs);
+    MyListener(Actions actions){
         keyadapter = new KeyListener() {
             public void keyTyped(KeyEvent keyEvent) {
 
             }
             public void keyPressed(KeyEvent keyEvent) {
-                if (keyEvent.getKeyCode() == KeyEvent.VK_N && keyEvent.isControlDown()) {
-                    actions.new_file();
-                }
-                if (keyEvent.getKeyCode() == KeyEvent.VK_O && keyEvent.isControlDown()) {
-                    actions.open_file();
-                }
-                if (keyEvent.getKeyCode() == KeyEvent.VK_S && keyEvent.isControlDown()) {
+                if (keyEvent.isControlDown()){
 
-                    actions.save_file();
+                if (keyEvent.getKeyCode() == (int) keyNew[1].charAt(0))  actions.new_file();
+
+                if (keyEvent.getKeyCode() == (int) keyOpen[1].charAt(0)) actions.open_file();
+
+                if (keyEvent.getKeyCode() == (int) keySave[1].charAt(0)) actions.save_file();
                 }
             }
 

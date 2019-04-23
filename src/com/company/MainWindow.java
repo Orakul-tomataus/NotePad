@@ -1,31 +1,33 @@
 package com.company;
 
         import javax.swing.*;
-        import java.awt.*;
-        import java.io.File;
-        import java.io.FileReader;
-        import java.io.FileWriter;
-        import java.io.IOException;
-        import java.util.Properties;
 
 class MainWindow extends JFrame
 {
-
+    static Config config;
 
     MainWindow(){
         super("Text Editor");
 
         JTabbedPane tabs = new JTabbedPane();
-        MyListener myListener = new MyListener(tabs);
-        Config config = new Config("config.properties");
+        config = new Config("config.properties");
+        Actions actions = new Actions(tabs);
+        MyListener myListener = new MyListener(actions);
+
+        Scroll.myListener = myListener;
+
+
+
+
 
         setSize(800,600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JMenuBar menu = new JMenuBar();
 
-        menu.add(new Files(tabs));
-        menu.add(new Settings(tabs));
+        menu.add(new Files(actions));
+        menu.add(new Settings(actions));
+
         setJMenuBar(menu);
         add(tabs);
         tabs.addKeyListener(myListener.getKeyadapter());

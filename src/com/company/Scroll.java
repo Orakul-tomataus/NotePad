@@ -5,14 +5,15 @@ import java.awt.*;
 
 class Scroll extends JScrollPane
 {
+    static MyListener myListener;
+
     private String name;
     private JTextArea text;
     static Font font;
-    Scroll(JTextArea text,String name,JTabbedPane tabs){
+    Scroll(JTextArea text,String name){
         super(text);
         this.text = text;
         this.name = name;
-        MyListener myListener = new MyListener(tabs);
         text.addKeyListener(myListener.getKeyadapter());
         this.text.setFont(Scroll.font);
     }
@@ -26,7 +27,4 @@ class Scroll extends JScrollPane
     String getText() {
         return text.getText();
     }
-
-
-
 }

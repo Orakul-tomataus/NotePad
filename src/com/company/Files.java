@@ -4,9 +4,8 @@ import javax.swing.*;
 
 class Files extends JMenu
 {
-    Files(JTabbedPane tabs){
+    Files(Actions actions){
         super("File");
-        Actions actions = new Actions(tabs);
         
         JMenuItem new_file = new JMenuItem("New File");
         JMenuItem open_file = new JMenuItem("Open File");

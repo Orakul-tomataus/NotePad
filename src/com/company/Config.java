@@ -7,37 +7,50 @@ import java.io.IOException;
 import java.util.Properties;
 
 class Config {
-    private static File configFile;
-    static int FontSize;
+    private Properties properties;
+    private File configFile;
 
     Config(String fileName){
         configFile = new File(fileName);
+        properties = new Properties();
         readConfig();
+
     }
-    static void writeConfig(){
+     private void writeConfig(){
         try {
             FileWriter writer = new FileWriter(configFile);
-            Properties properties = new Properties();
-
-            properties.setProperty("size",String.valueOf(FontSize));
-
             properties.store(writer, "settings");
             writer.close();
         }catch (IOException ex) {
-            // I/O error
+            System.out.print("Error writer");
         }
     }
-    private static void readConfig(){
+     private void readConfig(){
         try {
             FileReader reader = new FileReader(configFile);
-            Properties properties = new Properties();
             properties.load(reader);
-
-            FontSize = Integer.parseInt(properties.getProperty("size"));
-
             reader.close();
         }catch (IOException ex) {
-            // I/O error
+            System.out.print("Error read");
         }
     }
+    int getSize(){
+        String size = properties.getProperty("size");
+        return Integer.parseInt(size);
+    }
+    void setSize(int value){
+        String size = String.valueOf(value);
+        properties.setProperty("size",size);
+        writeConfig();
+    }
+    String[] getKeysNewFile(){
+        return properties.getProperty("new_file").split("-");
+    }
+    String[] getKeysOpenFile(){
+        return properties.getProperty("open_file").split("-");
+    }
+    String[] getKeysSaveFile(){
+        return properties.getProperty("save_file").split("-");
+    }
+
 }
