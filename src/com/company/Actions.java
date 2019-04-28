@@ -2,6 +2,8 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -37,8 +39,12 @@ class Actions
         pnlTab.add(lblTitle,BorderLayout.WEST);
         pnlTab.add(btnClose,BorderLayout.EAST);
         tabs.setTabComponentAt(id, pnlTab);
-        MyCloseActionHandler myCloseActionHandler = new MyCloseActionHandler(tabs);
-        btnClose.addActionListener(myCloseActionHandler);
+        btnClose.addActionListener(actionEvent -> {
+            Component selected = tabs.getSelectedComponent();
+            if (selected != null) {
+                tabs.remove(selected);
+            }
+        });
 
     }
     void save_file()
