@@ -7,6 +7,7 @@ class MyListener {
     private String[] keyNew = MainWindow.config.getKeysNewFile();
     private String[] keyOpen= MainWindow.config.getKeysOpenFile();
     private String[] keySave= MainWindow.config.getKeysSaveFile();
+    private String[] keyQuit= MainWindow.config.getKeysQuit();
     private KeyListener keyadapter;
 
     MyListener(Actions actions){
@@ -18,10 +19,10 @@ class MyListener {
                 if (keyEvent.isControlDown()){
 
                 if (keyEvent.getKeyCode() == (int) keyNew[1].charAt(0))  actions.new_file();
-
                 if (keyEvent.getKeyCode() == (int) keyOpen[1].charAt(0)) actions.open_file();
-
                 if (keyEvent.getKeyCode() == (int) keySave[1].charAt(0)) actions.save_file();
+                if (keyEvent.getKeyCode() == (int) keyQuit[1].charAt(0)) actions.quit();
+
                 }
             }
 

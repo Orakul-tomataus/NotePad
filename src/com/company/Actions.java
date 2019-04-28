@@ -9,10 +9,8 @@ import java.io.IOException;
 
 class Actions
 {
-    private final String NAME = "New file";
     private final Object[] possibilities = {10,15,20,30,40,50,100};
     private JFileChooser f;
-
     private JTabbedPane tabs;
 
     Actions(JTabbedPane tabs){
@@ -22,9 +20,26 @@ class Actions
 
     void new_file()
     {
-        JTextArea text = new JTextArea();
-        Scroll scroll = new Scroll(text,NAME);
-        tabs.addTab(NAME,scroll);
+        createTabs("","New file");
+    }
+
+    private void createTabs(String context,String name)
+    {
+        JTextArea text = new JTextArea(context);
+        Scroll scroll = new Scroll(text,name);
+        tabs.addTab(name,scroll);
+        int id = tabs.getTabCount();
+        id -= 1;
+        JPanel pnlTab = new JPanel(new BorderLayout());
+        pnlTab.setOpaque(false);
+        JLabel lblTitle = new JLabel(name);
+        JButton btnClose = new JButton("x");
+        pnlTab.add(lblTitle,BorderLayout.WEST);
+        pnlTab.add(btnClose,BorderLayout.EAST);
+        tabs.setTabComponentAt(id, pnlTab);
+        MyCloseActionHandler myCloseActionHandler = new MyCloseActionHandler(tabs);
+        btnClose.addActionListener(myCloseActionHandler);
+
     }
     void save_file()
     {
@@ -50,23 +65,20 @@ class Actions
     {
         f.showOpenDialog(null);
         File file = f.getSelectedFile();
-        if (file != null){
-            try(FileReader reader = new FileReader(file))
-            {
-                char[] buf = new char[256];
-                StringBuilder input = new StringBuilder();
-                JTextArea text;
-                while (reader.read(buf) > 0)
-                    input.append(String.copyValueOf(buf));
-                text = new JTextArea(input.toString());
-                Scroll scroll = new Scroll(text,file.getName());
-                tabs.addTab(file.getName(),scroll);
+        if (file == null) return;
+        try(FileReader reader = new FileReader(file))
+        {
+            char[] buf = new char[256];
+            StringBuilder input = new StringBuilder();
+            while (reader.read(buf) > 0)
+                input.append(String.copyValueOf(buf));
+            createTabs(input.toString(),file.getName());
             }
             catch(IOException ex)
             {
                 System.out.println(ex.getMessage());
             }
-        }
+
     }
 
     void selectSize(){
@@ -88,5 +100,10 @@ class Actions
             scroll.setFonts(font);
         }
         Scroll.font = font;
+    }
+
+    void quit(){
+
+        System.exit(0);
     }
 }

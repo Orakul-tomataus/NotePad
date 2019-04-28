@@ -7,6 +7,7 @@ class Scroll extends JScrollPane
 {
     static MyListener myListener;
 
+    boolean SaveStatus = false;
     private String name;
     private JTextArea text;
     static Font font;

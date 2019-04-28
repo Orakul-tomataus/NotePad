@@ -52,5 +52,8 @@ class Config {
     String[] getKeysSaveFile(){
         return properties.getProperty("save_file").split("-");
     }
+    String[] getKeysQuit(){
+        return properties.getProperty("quit").split("-");
+    }
 
 }
