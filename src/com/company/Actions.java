@@ -14,39 +14,20 @@ class Actions
     private final Object[] possibilities = {10,15,20,30,40,50,100};
     private JFileChooser f;
     private JTabbedPane tabs;
+    private Tab tab;
 
     Actions(JTabbedPane tabs){
         f = new JFileChooser();
         this.tabs = tabs;
+        this.tab = new Tab(tabs);
     }
 
     void new_file()
     {
-        createTabs("","New file");
+        tab.createTabs("","New file");
     }
 
-    private void createTabs(String context,String name)
-    {
-        JTextArea text = new JTextArea(context);
-        Scroll scroll = new Scroll(text,name);
-        tabs.addTab(name,scroll);
-        int id = tabs.getTabCount();
-        id -= 1;
-        JPanel pnlTab = new JPanel(new BorderLayout());
-        pnlTab.setOpaque(false);
-        JLabel lblTitle = new JLabel(name);
-        JButton btnClose = new JButton("x");
-        pnlTab.add(lblTitle,BorderLayout.WEST);
-        pnlTab.add(btnClose,BorderLayout.EAST);
-        tabs.setTabComponentAt(id, pnlTab);
-        btnClose.addActionListener(actionEvent -> {
-            Component selected = tabs.getSelectedComponent();
-            if (selected != null) {
-                tabs.remove(selected);
-            }
-        });
 
-    }
     void save_file()
     {
         Scroll selectedComponent = (Scroll)tabs.getSelectedComponent();
@@ -78,7 +59,7 @@ class Actions
             StringBuilder input = new StringBuilder();
             while (reader.read(buf) > 0)
                 input.append(String.copyValueOf(buf));
-            createTabs(input.toString(),file.getName());
+            tab.createTabs(input.toString(),file.getName());
             }
             catch(IOException ex)
             {
