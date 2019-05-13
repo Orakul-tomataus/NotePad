@@ -2,20 +2,19 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 
 class Scroll extends JScrollPane
 {
-    static MyListener myListener;
-
-    boolean SaveStatus = false;
     private String name;
     private JTextArea text;
     static Font font;
     Scroll(JTextArea text,String name){
         super(text);
+
         this.text = text;
         this.name = name;
-        text.addKeyListener(myListener.getKeyadapter());
+        text.addKeyListener(MainWindow.Listeners.getKeyadapter());
         this.text.setFont(Scroll.font);
     }
 

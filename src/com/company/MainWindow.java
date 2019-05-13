@@ -5,23 +5,18 @@ package com.company;
 class MainWindow extends JFrame
 {
     static Config config;
+    static MyListener Listeners;
 
     MainWindow(){
         super("Text Editor");
+        setSize(800,600);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JTabbedPane tabs = new JTabbedPane();
         config = new Config("config.properties");
         Actions actions = new Actions(tabs);
-        MyListener myListener = new MyListener(actions);
+        Listeners = new MyListener(actions);
 
-        Scroll.myListener = myListener;
-
-
-
-
-
-        setSize(800,600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         JMenuBar menu = new JMenuBar();
 
@@ -30,7 +25,7 @@ class MainWindow extends JFrame
 
         setJMenuBar(menu);
         add(tabs);
-        tabs.addKeyListener(myListener.getKeyadapter());
+        tabs.addKeyListener(Listeners.getKeyadapter());
     }
 
 }

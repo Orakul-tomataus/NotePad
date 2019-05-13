@@ -21,7 +21,7 @@ class MyListener {
                 if (keyEvent.getKeyCode() == (int) keyNew[1].charAt(0))  actions.new_file();
                 if (keyEvent.getKeyCode() == (int) keyOpen[1].charAt(0)) actions.open_file();
                 if (keyEvent.getKeyCode() == (int) keySave[1].charAt(0)) actions.save_file();
-                if (keyEvent.getKeyCode() == (int) keyQuit[1].charAt(0)) actions.quit();
+                if (keyEvent.getKeyCode() == (int) keyQuit[1].charAt(0)) System.exit(0);
 
                 }
             }

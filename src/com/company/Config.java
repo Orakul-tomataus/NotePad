@@ -1,5 +1,6 @@
 package com.company;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -14,9 +15,10 @@ class Config {
         configFile = new File(fileName);
         properties = new Properties();
         readConfig();
+        Scroll.font = new Font("",Font.PLAIN,getSize());
 
     }
-     private void writeConfig(){
+    private void writeConfig(){
         try {
             FileWriter writer = new FileWriter(configFile);
             properties.store(writer, "settings");
@@ -25,7 +27,7 @@ class Config {
             System.out.print("Error writer");
         }
     }
-     private void readConfig(){
+    private void readConfig(){
         try {
             FileReader reader = new FileReader(configFile);
             properties.load(reader);
@@ -55,5 +57,4 @@ class Config {
     String[] getKeysQuit(){
         return properties.getProperty("quit").split("-");
     }
-
 }

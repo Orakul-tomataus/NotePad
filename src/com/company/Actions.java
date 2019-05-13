@@ -2,8 +2,6 @@ package com.company;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -60,37 +58,37 @@ class Actions
             while (reader.read(buf) > 0)
                 input.append(String.copyValueOf(buf));
             tab.createTabs(input.toString(),file.getName());
-            }
-            catch(IOException ex)
-            {
-                System.out.println(ex.getMessage());
-            }
+        }
+        catch(IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
 
     }
 
     void selectSize(){
-        int size = (int)JOptionPane.showInputDialog(
-                tabs,
-                "Select size",
-                "Select size",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                possibilities,
-                MainWindow.config.getSize());
+        int size = (int) JOptionPane.showInputDialog(
+                    tabs,
+                    "Select size",
+                    "Select size",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    possibilities,
+                    MainWindow.config.getSize());
+        if (size == 0) return;
         MainWindow.config.setSize(size);
-        setFont(size);
+        updateFont(size);
     }
-    private void setFont(int size){
+    private void updateFont(int size){
         Font font = new Font("",Font.PLAIN,size);
-        for(int i = 0 ; i < tabs.getComponentCount();i++){
+        Scroll.font = font;
+        if (tabs.getTabCount() == 0)return;
+
+        for(int i = 0 ; i < tabs.getComponentCount() - 1;i++){
             Scroll scroll = (Scroll) tabs.getComponent(i);
             scroll.setFonts(font);
         }
-        Scroll.font = font;
-    }
 
-    void quit(){
 
-        System.exit(0);
     }
 }
