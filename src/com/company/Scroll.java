@@ -9,7 +9,9 @@ class Scroll extends JScrollPane
     private String name;
     private JTextArea text;
     static Font font;
-    Scroll(JTextArea text,String name){
+
+    Scroll(JTextArea text,String name)
+    {
         super(text);
 
         this.text = text;
@@ -23,6 +25,9 @@ class Scroll extends JScrollPane
     }
     void setFonts(Font font){
         this.text.setFont(font);
+    }
+    void append(String text){
+        this.text.append(text);
     }
     String getText() {
         return text.getText();

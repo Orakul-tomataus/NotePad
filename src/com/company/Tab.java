@@ -14,8 +14,7 @@ import java.awt.*;
         JTextArea text = new JTextArea(context);
         Scroll scroll = new Scroll(text,name);
         tabs.addTab(name,scroll);
-        int id = tabs.getTabCount();
-        id -= 1;
+        int id = tabs.getTabCount() - 1;
         JPanel pnlTab = new JPanel(new BorderLayout());
         pnlTab.setOpaque(false);
         JLabel lblTitle = new JLabel(name);
@@ -31,4 +30,5 @@ import java.awt.*;
         });
 
     }
+
 }

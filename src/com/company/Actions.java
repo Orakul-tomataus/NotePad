@@ -5,7 +5,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
+import java.util.Scanner;
 
 class Actions
 {
@@ -30,40 +30,43 @@ class Actions
     {
         Scroll selectedComponent = (Scroll)tabs.getSelectedComponent();
         if (selectedComponent == null) return;
-
-        selectedComponent.setEditable(false);
-        String output = selectedComponent.getText();
         f.showSaveDialog(null);
         File file = f.getSelectedFile();
         if (file == null) return;
 
-        try(FileWriter writer = new FileWriter(file,false)){
-            writer.write(output);
-        }catch (IOException eq) {
-            eq.printStackTrace();
-        }
-
+        selectedComponent.setEditable(false);
+        fileWrite(file,selectedComponent);
         selectedComponent.setEditable(true);
-
     }
+    private void fileWrite(File file,Scroll scroll){
+        try(FileWriter writer = new FileWriter(file,false)){
+            writer.write(scroll.getText());
+        }catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
     void open_file()
     {
         f.showOpenDialog(null);
         File file = f.getSelectedFile();
         if (file == null) return;
-        try(FileReader reader = new FileReader(file))
-        {
-            char[] buf = new char[256];
-            StringBuilder input = new StringBuilder();
-            while (reader.read(buf) > 0)
-                input.append(String.copyValueOf(buf));
-            tab.createTabs(input.toString(),file.getName());
-        }
-        catch(IOException ex)
-        {
-            System.out.println(ex.getMessage());
-        }
+        tab.createTabs("",file.getName());
+        Scroll scroll = (Scroll) tabs.getComponentAt(tabs.getTabCount() - 1);
+        fileRead(file,scroll);
+    }
 
+    private void fileRead(File file,Scroll scroll){
+        try {
+            Scanner scan = new Scanner(new FileReader(file));
+            while(scan.hasNextLine()){
+                String temp=scan.nextLine()+"\n";
+                scroll.append(temp);
+            }
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     void selectSize(){

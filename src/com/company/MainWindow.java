@@ -17,9 +17,7 @@ class MainWindow extends JFrame
         Actions actions = new Actions(tabs);
         Listeners = new MyListener(actions);
 
-
         JMenuBar menu = new JMenuBar();
-
         menu.add(new Files(actions));
         menu.add(new Settings(actions));
 
